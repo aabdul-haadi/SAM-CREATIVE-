@@ -172,7 +172,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Adding a blur effect at the bottom of the section */}
-      <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-dark-500 to-transparent filter blur-3xl" />
+<div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-dark-500 to-transparent filter blur-[10px] transition-all ease-out" />
     </motion.section>
   );
 };

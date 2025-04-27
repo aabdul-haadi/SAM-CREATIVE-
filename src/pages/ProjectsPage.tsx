@@ -39,6 +39,26 @@ const ProjectsPage = () => {
     setSelectedMedia(null);
   };
 
+  // Redirect to the specific URL based on the clicked project
+  const redirectToProject = (projectId: string) => {
+    switch (projectId) {
+      case 'fashion-store':
+        window.location.href = 'https://fashionflare.pk/';
+        break;
+      case 'artisan-marketplace':
+        window.location.href = 'https://dmarket.pk/?srsltid=AfmBOoo-TjS3bB4u5NYn6yXH5x0pDZJsPTxT-IBx3AVCy9Vh-Ar0vjvo';
+        break;
+      case 'organic-food':
+        window.location.href = 'https://www.carrefour.pk/mafpak/en/n/c/clp_FPAK1700000?srsltid=AfmBOopbb-ELVy9q3-MV6LrqzhFr3SarMeJqnkyXwFmo8p2Ch8T2dpGX';
+        break;
+      case 'electronics-shop':
+        window.location.href = 'https://www.naheed.pk/home-lifestyle/electronic-accessories?srsltid=AfmBOooL4EOY3nzvkZ5hjVXA22j-RiPGeCUh4e7VtgfOkyRQcFG7s2K6';
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -65,7 +85,7 @@ const ProjectsPage = () => {
             key={project.id}
             whileHover={{ scale: 1.05 }}
             className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-            onClick={() => openModal(project.image)} // Click to open modal
+            onClick={() => redirectToProject(project.id)} // Redirect on click
           >
             <div className="relative h-64 overflow-hidden rounded-xl">
               {/* Check if media is a video or an image */}

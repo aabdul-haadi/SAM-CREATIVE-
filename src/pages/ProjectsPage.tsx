@@ -2,32 +2,39 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-
-// Import categories from portfolioData.ts (with the assets already imported)
 import { graphicDesignCategories, webDevelopmentCategories, contentWritingCategories } from '../data/portfolioData';
 
 const ProjectsPage = () => {
   const { category } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedMedia, setSelectedMedia] = useState<string | null>(null); // To store either image or video
+  const [selectedMedia, setSelectedMedia] = useState<string | null>(null);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [isZoomActive, setIsZoomActive] = useState(false);
 
   const getCategoryProjects = () => {
     const allCategories = [
       ...webDevelopmentCategories,
       ...contentWritingCategories,
-      ...graphicDesignCategories
+      ...graphicDesignCategories,
     ];
-    return allCategories.find(cat => cat.id === category)?.projects || [];
+
+    const categoryData = allCategories.find((cat) => cat.id === category);
+
+    if (category === 'graphic-design') {
+      return graphicDesignCategories.find((cat) => cat.id === category)?.projects || [];
+    }
+
+    return categoryData?.projects || [];
   };
 
   const projects = getCategoryProjects();
-  const categoryTitle = projects.length > 0 ? 
-    [
-      ...webDevelopmentCategories,
-      ...contentWritingCategories,
-      ...graphicDesignCategories
-    ].find(cat => cat.id === category)?.title : 
-    'Projects';
+  const categoryTitle = projects.length > 0
+    ? [
+        ...webDevelopmentCategories,
+        ...contentWritingCategories,
+        ...graphicDesignCategories,
+      ].find((cat) => cat.id === category)?.title
+    : 'Projects';
 
   const openModal = (media: string) => {
     setSelectedMedia(media);
@@ -39,24 +46,11 @@ const ProjectsPage = () => {
     setSelectedMedia(null);
   };
 
-  // Redirect to the specific URL based on the clicked project
-  const redirectToProject = (projectId: string) => {
-    switch (projectId) {
-      case 'fashion-store':
-        window.location.href = 'https://fashionflare.pk/';
-        break;
-      case 'artisan-marketplace':
-        window.location.href = 'https://dmarket.pk/?srsltid=AfmBOoo-TjS3bB4u5NYn6yXH5x0pDZJsPTxT-IBx3AVCy9Vh-Ar0vjvo';
-        break;
-      case 'organic-food':
-        window.location.href = 'https://www.carrefour.pk/mafpak/en/n/c/clp_FPAK1700000?srsltid=AfmBOopbb-ELVy9q3-MV6LrqzhFr3SarMeJqnkyXwFmo8p2Ch8T2dpGX';
-        break;
-      case 'electronics-shop':
-        window.location.href = 'https://www.naheed.pk/home-lifestyle/electronic-accessories?srsltid=AfmBOooL4EOY3nzvkZ5hjVXA22j-RiPGeCUh4e7VtgfOkyRQcFG7s2K6';
-        break;
-      default:
-        break;
-    }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomPosition({ x, y });
   };
 
   return (
@@ -66,29 +60,34 @@ const ProjectsPage = () => {
       exit={{ opacity: 0 }}
       className="container mx-auto px-4 py-32"
     >
-      <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8">
+      {/* Back to Home */}
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8"
+      >
         <ArrowLeft size={20} />
         Back to Home
       </Link>
-      
+
+      {/* Page Title */}
       <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 dark:text-white mb-8">
         {categoryTitle ?? 'Projects'}
       </h1>
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-12">
         Explore our portfolio of {categoryTitle?.toLowerCase() ?? 'projects'}
       </p>
-      
-      {/* Updated grid with responsive layout */}
+
+      {/* Projects Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project) => (
           <motion.div
             key={project.id}
             whileHover={{ scale: 1.05 }}
             className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-            onClick={() => redirectToProject(project.id)} // Redirect on click
+            onClick={() => openModal(project.image)}
           >
             <div className="relative h-64 overflow-hidden rounded-xl">
-              {/* Check if media is a video or an image */}
+              {/* Image or Video */}
               {project.image.endsWith('.mp4') ? (
                 <video
                   src={project.image}
@@ -105,6 +104,8 @@ const ProjectsPage = () => {
                 />
               )}
             </div>
+
+            {/* Hover Overlay */}
             <div className="absolute inset-0 flex justify-center items-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <p className="text-white text-lg font-semibold">{project.title}</p>
             </div>
@@ -112,18 +113,23 @@ const ProjectsPage = () => {
         ))}
       </div>
 
-      {/* Modal for smooth image/video view */}
+      {/* Modal for Selected Image/Video */}
       {isModalOpen && selectedMedia && (
-        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50 overflow-y-auto p-6">
           <motion.div
-            className="bg-transparent p-0 w-full max-w-3xl flex justify-center items-center relative"
+            className="relative w-full max-w-6xl flex justify-center items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            <div className="relative">
-              {/* Check if selected media is a video or an image */}
+            <div
+              className="relative overflow-hidden rounded-2xl bg-white p-4 max-h-[90vh]"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsZoomActive(true)}
+              onMouseLeave={() => setIsZoomActive(false)}
+            >
+              {/* Render video normally */}
               {selectedMedia.endsWith('.mp4') ? (
                 <video
                   src={selectedMedia}
@@ -133,16 +139,24 @@ const ProjectsPage = () => {
                   loop
                 />
               ) : (
-                <img
-                  src={selectedMedia}
-                  alt="Selected Project"
-                  className="w-full max-h-[80vh] object-contain rounded-lg"
-                />
+                <div className="relative overflow-hidden group">
+                  <img
+                    src={selectedMedia}
+                    alt="Selected Project"
+                    className={`w-full max-h-[80vh] object-contain transition-transform duration-500 ${
+                      isZoomActive ? 'scale-125' : ''
+                    }`}
+                    style={{
+                      transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                    }}
+                  />
+                </div>
               )}
-              {/* Close button integrated with the image/video */}
+
+              {/* Close Button */}
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 transition-colors"
+                className="absolute top-4 right-4 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 transition-colors z-10"
               >
                 X
               </button>

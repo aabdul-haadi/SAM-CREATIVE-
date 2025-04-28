@@ -6,6 +6,27 @@ interface PortfolioCategory {
   description: string;
   projects: Project[];
 }
+// Import images for WordPress E-commerce
+import we1 from '../assets/web/we1.png';
+import wof4 from '../assets/web/wof4.png';
+import wf2 from '../assets/web/wf2.png';
+import wmp3 from '../assets/web/wmp3.png';
+
+// Import images for SaaS Dashboards
+import crm1 from '../assets/web/crm1.jpg';
+import crm2 from '../assets/web/crm2.png';
+import crm3 from '../assets/web/crm3.png';
+import crm4 from '../assets/web/crm4.png';
+import crm5 from '../assets/web/crm5.png';
+
+// Import images for React Landing Pages
+import web1 from '../assets/web/web1.png';
+import web2 from '../assets/web/web2.png';
+import web3 from '../assets/web/web3.png';
+import web4 from '../assets/web/web4.png';
+import web5 from '../assets/web/web5.png';
+import web6 from '../assets/web/web6.png';
+import web7 from '../assets/web/web7.jpg';
 
 export const webDevelopmentCategories: PortfolioCategory[] = [
   {
@@ -17,27 +38,27 @@ export const webDevelopmentCategories: PortfolioCategory[] = [
         id: 'fashion-store',
         title: 'Fashion Store',
         description: 'Custom WooCommerce store with advanced filtering and size guide',
-        image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8'
-      },
-      {
-        id: 'artisan-marketplace',
-        title: 'Artisan Marketplace',
-        description: 'Multi-vendor marketplace for handcrafted goods',
-        image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc'
+        image: we1,
       },
       {
         id: 'organic-food',
         title: 'Organic Food Store',
         description: 'WooCommerce store with subscription boxes and recipe integration',
-        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e'
+        image: wof4,
+      },
+      {
+        id: 'artisan-marketplace',
+        title: 'Artisan Marketplace',
+        description: 'Multi-vendor marketplace for handcrafted goods',
+        image: wf2,
       },
       {
         id: 'electronics-shop',
         title: 'Electronics Shop',
         description: 'Feature-rich electronics store with product comparisons',
-        image: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03'
-      }
-    ]
+        image: wmp3,
+      },
+    ],
   },
   {
     id: 'saas-dashboards',
@@ -48,27 +69,33 @@ export const webDevelopmentCategories: PortfolioCategory[] = [
         id: 'analytics-dashboard',
         title: 'Analytics Dashboard',
         description: 'Real-time data visualization for marketing metrics',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71'
+        image: crm1,
       },
       {
         id: 'crm-dashboard',
         title: 'CRM Dashboard',
         description: 'Customer relationship management system with rich insights',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f'
+        image: crm2,
       },
       {
         id: 'project-management',
         title: 'Project Management',
         description: 'Task management and team collaboration platform',
-        image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40'
+        image: crm3,
       },
       {
         id: 'finance-dashboard',
         title: 'Finance Dashboard',
         description: 'Financial analytics and reporting system',
-        image: 'https://images.unsplash.com/photo-1543286386-713bdd548da4'
-      }
-    ]
+        image: crm4,
+      },
+      {
+        id: 'sales-dashboard',
+        title: 'Sales Dashboard',
+        description: 'Track sales performance and KPIs',
+        image: crm5,
+      },
+    ],
   },
   {
     id: 'react-landing',
@@ -79,30 +106,47 @@ export const webDevelopmentCategories: PortfolioCategory[] = [
         id: 'startup-landing',
         title: 'Startup Landing',
         description: 'Modern landing page with parallax effects',
-        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c'
+        image: web1,
       },
       {
         id: 'product-launch',
         title: 'Product Launch',
         description: 'Interactive product showcase with 3D elements',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f'
+        image: web2,
       },
       {
         id: 'app-landing',
         title: 'App Landing',
         description: 'Mobile app landing page with animated features',
-        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c'
+        image: web3,
       },
       {
         id: 'event-landing',
         title: 'Event Landing',
         description: 'Conference landing page with countdown timer',
-        image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678'
-      }
-    ]
-  }
+        image: web4,
+      },
+      {
+        id: 'business-landing',
+        title: 'Business Landing',
+        description: 'Corporate landing page for startups',
+        image: web5,
+      },
+      {
+        id: 'personal-portfolio',
+        title: 'Personal Portfolio',
+        description: 'Personal branding and portfolio site',
+        image: web6,
+      },
+      {
+        id: 'agency-landing',
+        title: 'Agency Landing',
+        description: 'Creative agency landing page',
+        image: web7,
+      },
+    ],
+  },
 ];
-
 export const contentWritingCategories: PortfolioCategory[] = [
   {
     id: 'seo-blog',

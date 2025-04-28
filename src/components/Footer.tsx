@@ -108,21 +108,19 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="text-primary mt-1" size={20} />
                 <span className="text-gray-600 dark:text-gray-400">
-                  123 Innovation Drive<br />
-                  Tech Valley, CA 94043
+                Karachi, Pakistan
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-primary" size={20} />
                 <a href="tel:+1234567890" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
-                  (123) 456-7890
+                  +92 326 3778850
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="text-primary" size={20} />
                 <a href="mailto:info@samcreative.com" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
-                  info@samcreative.com
-                </a>
+ samcreativeoficial@gmail.com                </a>
               </li>
             </ul>
           </div>

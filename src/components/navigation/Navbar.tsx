@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Code, Palette, PenTool, Home, Sun, Moon, Bot, MessageCircle } from 'lucide-react';
+import { Menu, X, Code, Palette, PenTool, Home, Bot, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react';
-import { useTheme } from '../../context/ThemeContext';
+// import { useTheme } from '../../context/ThemeContext'; // 🔥 Theme switching commented out (dark mode only)
 
-const NavDropdown = ({ title, icon: Icon, items }) => (
+// Type for dropdown items
+type NavItem = {
+  id: string;
+  title: string;
+};
+
+// Props for NavDropdown
+interface NavDropdownProps {
+  title: string;
+  icon: React.ComponentType<{ size?: number }>;
+  items: NavItem[];
+}
+
+// NavDropdown Component
+const NavDropdown: React.FC<NavDropdownProps> = ({ title, icon: Icon, items }) => (
   <HeadlessMenu as="div" className="relative">
     {({ open }) => (
       <>
@@ -22,7 +36,7 @@ const NavDropdown = ({ title, icon: Icon, items }) => (
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <HeadlessMenu.Items className="absolute z-50 mt-2 w-56 origin-top-right bg-white dark:bg-secondary rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <HeadlessMenu.Items className="absolute z-50 mt-2 w-56 origin-top-right bg-secondary rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="p-2 space-y-1">
               {items.map((item) => (
                 <HeadlessMenu.Item key={item.id}>
@@ -30,9 +44,9 @@ const NavDropdown = ({ title, icon: Icon, items }) => (
                     <Link
                       to={`/projects/${item.id}`}
                       className={`${
-                        active 
-                          ? 'bg-gray-100 dark:bg-secondary/80 text-primary' 
-                          : 'text-secondary dark:text-secondary-dark'
+                        active
+                          ? 'bg-secondary/80 text-primary'
+                          : 'text-secondary-dark'
                       } group flex items-center rounded-lg px-4 py-3 text-sm transition-colors`}
                     >
                       <span className="font-medium">{item.title}</span>
@@ -48,27 +62,28 @@ const NavDropdown = ({ title, icon: Icon, items }) => (
   </HeadlessMenu>
 );
 
-const Navbar = () => {
+// Navbar Component
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme(); // 🔥 Commented (no light mode)
 
-  const webDevItems = [
+  const webDevItems: NavItem[] = [
     { id: 'wordpress-ecommerce', title: 'WordPress E-commerce' },
     { id: 'saas-dashboards', title: 'SaaS Solutions' },
-    { id: 'react-landing', title: 'React Development' }
+    { id: 'react-landing', title: 'React Development' },
   ];
 
-  const contentItems = [
+  const contentItems: NavItem[] = [
     { id: 'seo-blog', title: 'SEO Blog Articles' },
     { id: 'product-descriptions', title: 'Product Descriptions' },
-    { id: 'email-ad-copy', title: 'Email & Ad Copy' }
+    { id: 'email-ad-copy', title: 'Email & Ad Copy' },
   ];
 
-  const designItems = [
+  const designItems: NavItem[] = [
     { id: 'brand-identity', title: 'Brand Identity' },
     { id: 'social-media', title: 'Social Media Design' },
-    { id: 'print-design', title: 'Print Design' }
+    { id: 'print-design', title: 'Print Design' },
   ];
 
   const scrollToAISection = () => {
@@ -82,56 +97,41 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav 
+    <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 dark:bg-secondary/95 backdrop-blur-sm py-4 shadow-lg' 
+        scrolled
+          ? 'bg-secondary/95 backdrop-blur-sm py-4 shadow-lg'
           : 'bg-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-4">
-            <img 
-              src={theme === 'dark' ? '/dark.png' : '/white.png'} 
-              alt="SAM CREATIVE" 
+            <img
+              src="/dark.png" // Always use dark logo now
+              alt="SAM CREATIVE"
               className="h-16 w-auto"
             />
-            <span className="text-2xl font-bold text-secondary dark:text-secondary-dark">
+            <span className="text-2xl font-bold text-secondary-dark">
               SAM CREATIVE
             </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link 
-              to="/" 
-              className="nav-link flex items-center gap-2"
-            >
+            <Link to="/" className="nav-link flex items-center gap-2">
               <Home size={20} />
               Home
             </Link>
-            <NavDropdown 
-              title="Web Development" 
-              icon={Code} 
-              items={webDevItems} 
-            />
-            <NavDropdown 
-              title="Content Writing" 
-              icon={PenTool} 
-              items={contentItems} 
-            />
-            <NavDropdown 
-              title="Design" 
-              icon={Palette} 
-              items={designItems} 
-            />
+            <NavDropdown title="Web Development" icon={Code} items={webDevItems} />
+            <NavDropdown title="Content Writing" icon={PenTool} items={contentItems} />
+            <NavDropdown title="Design" icon={Palette} items={designItems} />
             <button
               onClick={scrollToAISection}
               className="nav-link flex items-center gap-2"
@@ -140,13 +140,15 @@ const Navbar = () => {
               AI Assistant
             </button>
             <div className="flex items-center gap-4">
-              <button 
+              {/* 
+              <button
                 onClick={toggleTheme}
                 className="nav-link p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
+                <Sun size={20} />
+              </button> 
+              */}
               <a
                 href="https://wa.me/1234567890"
                 target="_blank"
@@ -161,16 +163,18 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-            <button 
+            {/* 
+            <button
               onClick={toggleTheme}
               className="nav-link p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <button 
+              <Sun size={20} />
+            </button> 
+            */}
+            <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-secondary dark:text-secondary-dark"
+              className="text-secondary-dark"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -185,21 +189,21 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden mt-4 bg-white dark:bg-secondary rounded-xl shadow-lg overflow-hidden"
+              className="md:hidden mt-4 bg-secondary rounded-xl shadow-lg overflow-hidden"
             >
               <div className="p-4 space-y-4">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   className="nav-link flex items-center gap-2"
                   onClick={() => setIsOpen(false)}
                 >
                   <Home size={20} />
                   Home
                 </Link>
-                
+
                 {/* Web Development */}
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold text-secondary/70 dark:text-secondary-dark/70">
+                  <p className="text-sm font-semibold text-secondary-dark/70">
                     Web Development
                   </p>
                   {webDevItems.map((item) => (
@@ -216,7 +220,7 @@ const Navbar = () => {
 
                 {/* Content Writing */}
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold text-secondary/70 dark:text-secondary-dark/70">
+                  <p className="text-sm font-semibold text-secondary-dark/70">
                     Content Writing
                   </p>
                   {contentItems.map((item) => (
@@ -233,7 +237,7 @@ const Navbar = () => {
 
                 {/* Design */}
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold text-secondary/70 dark:text-secondary-dark/70">
+                  <p className="text-sm font-semibold text-secondary-dark/70">
                     Design
                   </p>
                   {designItems.map((item) => (

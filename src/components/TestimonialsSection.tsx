@@ -25,7 +25,7 @@ const testimonials = [
     content: 'The team at SAM Creative went above and beyond our expectations. Their creative solutions and technical expertise are unmatched.',
     rating: 5,
   },
-  {
+  {   
     name: 'David Wilson',
     role: 'CTO, InnovateTech',
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',

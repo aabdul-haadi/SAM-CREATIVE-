@@ -1,4 +1,4 @@
-// import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
@@ -7,7 +7,8 @@ import { webDevelopmentCategories, contentWritingCategories, graphicDesignCatego
 const ProjectDetail = () => {
   const { id } = useParams();
 
-  const findProject = () => {
+  // Memoized project lookup (optimized)
+  const project = useMemo(() => {
     const allProjects = [
       ...webDevelopmentCategories,
       ...contentWritingCategories,
@@ -15,9 +16,7 @@ const ProjectDetail = () => {
     ].flatMap((category) => category.projects);
 
     return allProjects.find((project) => project.id === id);
-  };
-
-  const project = findProject();
+  }, [id]);
 
   if (!project) {
     return (
@@ -72,7 +71,7 @@ const ProjectDetail = () => {
           <h1 className="text-4xl font-bold text-white mb-4">{project.title}</h1>
           <p className="text-gray-400 text-lg mb-8 leading-relaxed">{project.description}</p>
 
-          {/* Optional: Add button if needed */}
+          {/* Optional: Demo Button */}
           {/* {project.demoUrl && (
             <a
               href={project.demoUrl}

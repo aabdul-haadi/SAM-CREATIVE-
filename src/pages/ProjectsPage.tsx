@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
@@ -11,7 +11,8 @@ const ProjectsPage = () => {
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [isZoomActive, setIsZoomActive] = useState(false);
 
-  const getCategoryProjects = () => {
+  // Memoized projects based on category
+  const projects = useMemo(() => {
     const allCategories = [
       ...webDevelopmentCategories,
       ...contentWritingCategories,
@@ -25,16 +26,18 @@ const ProjectsPage = () => {
     }
 
     return categoryData?.projects || [];
-  };
+  }, [category]);
 
-  const projects = getCategoryProjects();
-  const categoryTitle = projects.length > 0
-    ? [
-        ...webDevelopmentCategories,
-        ...contentWritingCategories,
-        ...graphicDesignCategories,
-      ].find((cat) => cat.id === category)?.title
-    : 'Projects';
+  // Memoized category title
+  const categoryTitle = useMemo(() => {
+    return projects.length > 0
+      ? [
+          ...webDevelopmentCategories,
+          ...contentWritingCategories,
+          ...graphicDesignCategories,
+        ].find((cat) => cat.id === category)?.title
+      : 'Projects';
+  }, [projects, category]);
 
   const openModal = (media: string) => {
     setSelectedMedia(media);
@@ -91,15 +94,17 @@ const ProjectsPage = () => {
               {project.image.endsWith('.mp4') ? (
                 <video
                   src={project.image}
-                  className="w-full h-full object-cover transform transition-transform duration-500"
+                  preload="none"
                   loop
                   muted
                   playsInline
+                  className="w-full h-full object-cover transform transition-transform duration-500"
                 />
               ) : (
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transform transition-transform duration-500"
                 />
               )}
@@ -113,7 +118,7 @@ const ProjectsPage = () => {
         ))}
       </div>
 
-      {/* Modal for Selected Image/Video */}
+      {/* Modal for Selected Media */}
       {isModalOpen && selectedMedia && (
         <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50 overflow-y-auto p-6">
           <motion.div
@@ -129,7 +134,7 @@ const ProjectsPage = () => {
               onMouseEnter={() => setIsZoomActive(true)}
               onMouseLeave={() => setIsZoomActive(false)}
             >
-              {/* Render video normally */}
+              {/* Render video or zoomable image */}
               {selectedMedia.endsWith('.mp4') ? (
                 <video
                   src={selectedMedia}
@@ -137,6 +142,7 @@ const ProjectsPage = () => {
                   controls
                   autoPlay
                   loop
+                  preload="none"
                 />
               ) : (
                 <div className="relative overflow-hidden group">
@@ -149,6 +155,7 @@ const ProjectsPage = () => {
                     style={{
                       transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
                     }}
+                    loading="lazy"
                   />
                 </div>
               )}

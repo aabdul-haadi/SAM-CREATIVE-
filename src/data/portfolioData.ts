@@ -345,12 +345,12 @@ export const graphicDesignCategories: PortfolioCategory[] = [
         description: 'High-end product catalog design',
         image: video3 // Imported video
       },
-      {
-        id: 'magazine-design',
-        title: 'Magazine Layout',
-        description: 'Editorial design for lifestyle magazine',
-        image: video3 // Imported video
-      }
+      // {
+      //   id: 'magazine-design',
+      //   title: 'Magazine Layout',
+      //   description: 'Editorial design for lifestyle magazine',
+      //   image: video3 // Imported video
+      // }
     ]
   }
 ];

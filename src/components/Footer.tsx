@@ -5,7 +5,6 @@ import {
   Phone, 
   MapPin, 
   Facebook, 
-  Twitter, 
   Instagram, 
   Linkedin 
 } from 'lucide-react';
@@ -26,7 +25,10 @@ const Footer = () => {
                 alt="SAM CREATIVE" 
                 className="h-20 w-auto"
               />
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">
+              <span
+                className="text-2xl font-bold text-secondary-dark"
+                style={{ fontFamily: 'Biger Over, sans-serif' }}
+              >
                 SAM CREATIVE
               </span>
             </Link>
@@ -34,16 +36,13 @@ const Footer = () => {
               Transforming ideas into exceptional digital experiences. Your vision, our expertise.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+              <a href="https://www.facebook.com/share/16bao9N87o/" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/sam.creative.animation?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/in/samcreative-/" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -81,21 +80,25 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                {/* About Us scroll to #about section */}
+                <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                   About Us
-                </Link>
+                </a>
               </li>
               <li>
-                
+                {/* Contact Us leads to WhatsApp */}
+                <a
+                  href="https://wa.me/923263778850"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
+                >
+                  Contact Us
+                </a>
               </li>
               <li>
                 <Link to="/testimonials" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                   Testimonials
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
-                  Contact
                 </Link>
               </li>
             </ul>
@@ -103,24 +106,25 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact Info</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="text-primary mt-1" size={20} />
                 <span className="text-gray-600 dark:text-gray-400">
-                Karachi, Pakistan
+                  Karachi, Pakistan
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-primary" size={20} />
-                <a href="tel:+1234567890" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                <a href="tel:+923263778850" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
                   +92 326 3778850
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="text-primary" size={20} />
-                <a href="mailto:info@samcreative.com" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
- samcreativeoficial@gmail.com                </a>
+                <a href="mailto:samcreativeoficial@gmail.com" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                  samcreativeoficial@gmail.com
+                </a>
               </li>
             </ul>
           </div>
@@ -129,7 +133,7 @@ const Footer = () => {
         <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              © 2024 SAM CREATIVE. All rights reserved.
+              © 2025 SAM CREATIVE. All rights reserved.
             </p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <Link to="/legal" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">

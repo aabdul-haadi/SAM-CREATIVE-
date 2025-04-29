@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Instagram } from 'lucide-react';
 
@@ -36,7 +36,8 @@ const ContactForm = () => {
     >
       <div className="flex flex-col gap-4">
         <motion.a
-          href="mailto:ahaadi1001@gmail.com"
+          href="mailto:samcreativeoficial@gmail.com
+"
           variants={iconVariants}
           whileHover="hover"
           className="bg-white dark:bg-gray-800 p-3 rounded-full text-primary hover:text-primary/80 shadow-lg hover:shadow-xl transition-all duration-300"
@@ -44,7 +45,7 @@ const ContactForm = () => {
           <Mail size={24} />
         </motion.a>
         <motion.a
-          href="https://instagram.com"
+          href="https://www.instagram.com/sam.creative.animation?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
           target="_blank"
           rel="noopener noreferrer"
           variants={iconVariants}

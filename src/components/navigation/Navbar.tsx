@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Code, Palette, PenTool, Home, Bot, MessageCircle } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react'; // ✅ Proper LucideIcon typing
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react';
-// import { useTheme } from '../../context/ThemeContext'; // 🔥 Theme switching commented out (dark mode only)
+// import { useTheme } from '../../context/ThemeContext'; // ❌ Commented theme switching
 
-// Type for dropdown items
+// Define types
 type NavItem = {
   id: string;
   title: string;
 };
 
-// Props for NavDropdown
 interface NavDropdownProps {
   title: string;
-  icon: React.ComponentType<{ size?: number }>;
+  icon: LucideIcon;
   items: NavItem[];
 }
 
 // NavDropdown Component
-const NavDropdown: React.FC<NavDropdownProps> = ({ title, icon: Icon, items }) => (
+const NavDropdown = ({ title, icon: Icon, items }: NavDropdownProps) => (
   <HeadlessMenu as="div" className="relative">
     {({ open }) => (
       <>
@@ -66,7 +66,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ title, icon: Icon, items }) =
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // const { theme, toggleTheme } = useTheme(); // 🔥 Commented (no light mode)
+  // const { theme, toggleTheme } = useTheme(); // ❌ Commented theme switching
 
   const webDevItems: NavItem[] = [
     { id: 'wordpress-ecommerce', title: 'WordPress E-commerce' },
@@ -97,15 +97,16 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav
+    <nav 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-secondary/95 backdrop-blur-sm py-4 shadow-lg'
+        scrolled 
+          ? 'bg-secondary/95 backdrop-blur-sm py-4 shadow-lg' 
           : 'bg-transparent py-6'
       }`}
     >
@@ -113,14 +114,18 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4">
-            <img
-              src="/dark.png" // Always use dark logo now
-              alt="SAM CREATIVE"
+            <img 
+              src="/dark.png" 
+              alt="SAM CREATIVE" 
               className="h-16 w-auto"
             />
-            <span className="text-2xl font-bold text-secondary-dark">
-              SAM CREATIVE
-            </span>
+           <span
+  className="text-2xl font-bold text-secondary-dark"
+  style={{ fontFamily: 'Biger Over, sans-serif' }}
+>
+  SAM CREATIVE
+</span>
+
           </Link>
 
           {/* Desktop Menu */}
@@ -140,15 +145,6 @@ const Navbar: React.FC = () => {
               AI Assistant
             </button>
             <div className="flex items-center gap-4">
-              {/* 
-              <button
-                onClick={toggleTheme}
-                className="nav-link p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
-                aria-label="Toggle theme"
-              >
-                <Sun size={20} />
-              </button> 
-              */}
               <a
                 href="https://wa.me/1234567890"
                 target="_blank"
@@ -163,16 +159,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-            {/* 
-            <button
-              onClick={toggleTheme}
-              className="nav-link p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
-              aria-label="Toggle theme"
-            >
-              <Sun size={20} />
-            </button> 
-            */}
-            <button
+            <button 
               onClick={() => setIsOpen(!isOpen)}
               className="text-secondary-dark"
               aria-label="Toggle menu"
@@ -192,8 +179,8 @@ const Navbar: React.FC = () => {
               className="md:hidden mt-4 bg-secondary rounded-xl shadow-lg overflow-hidden"
             >
               <div className="p-4 space-y-4">
-                <Link
-                  to="/"
+                <Link 
+                  to="/" 
                   className="nav-link flex items-center gap-2"
                   onClick={() => setIsOpen(false)}
                 >
